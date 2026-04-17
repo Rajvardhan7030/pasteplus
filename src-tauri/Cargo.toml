@@ -1,0 +1,23 @@
+[package]
+name = "clipflow"
+version = "0.1.0"
+description = "Phase 1 Clipboard Manager"
+authors = ["you"]
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = ["system-tray", "global-shortcut", "shell-open"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+rusqlite = { version = "0.29", features = ["bundled"] }
+anyhow = "1.0"
+enigo = "0.1.2"
+directories = "5.0"
+chrono = "0.4"
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]

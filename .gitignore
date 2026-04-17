@@ -1,0 +1,21 @@
+# Build artifacts
+node_modules
+dist
+dist-isolation
+src-tauri/target
+
+# Database
+src-tauri/*.db
+src-tauri/*.db-journal
+
+# Environment
+.env
+.env.*
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
