@@ -18,6 +18,13 @@ You'll need these installed on your system for ClipFlow to work properly:
 
 ## Getting Started
 1. **Install dependencies:** `npm install`
+   **linux-dependancy:**
+   for ubuntu debian
+   ```bash
+   sudo apt install libsoup2.4-dev libwebkit2gtk-4.0-dev build-essential
+     curl wget libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+     wl-clipboard xclip libxdo-dev
+   ```
 2. **Development:** `npm run tauri dev`
 3. **Build:** `npm run tauri build`
 
