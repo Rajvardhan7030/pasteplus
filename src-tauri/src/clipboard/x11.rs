@@ -35,6 +35,7 @@ impl ClipboardWatcher for X11Watcher {
         let mut child = Command::new("xclip")
             .arg("-selection")
             .arg("clipboard")
+            .arg("-i")
             .stdin(Stdio::piped())
             .spawn()
             .map_err(|_| anyhow::anyhow!("xclip not installed?"))?;

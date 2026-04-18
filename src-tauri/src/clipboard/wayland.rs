@@ -20,17 +20,15 @@ impl ClipboardWatcher for WaylandWatcher {
         let reader = BufReader::new(stdout);
 
         for line in reader.lines() {
-            if let Ok(marker) = line {
-                if marker == "_CHANGE_" {
-                    let output = Command::new("wl-paste")
-                        .arg("-n")
-                        .output();
-                    
-                    if let Ok(out) = output {
-                        let content = String::from_utf8_lossy(&out.stdout).to_string();
-                        if !content.trim().is_empty() {
-                            on_change(content);
-                        }
+            if let Ok(_) = line {
+                let output = Command::new("wl-paste")
+                    .arg("-n")
+                    .output();
+                
+                if let Ok(out) = output {
+                    let content = String::from_utf8_lossy(&out.stdout).to_string();
+                    if !content.trim().is_empty() {
+                        on_change(content);
                     }
                 }
             }

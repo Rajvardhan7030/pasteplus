@@ -2,49 +2,37 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "PastePlus",
-    "version": "0.1.0"
+  "bundle": {
+    "active": true,
+    "category": "Utility",
+    "copyright": "",
+    "externalBin": [],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "targets": "all",
+    "longDescription": "",
+    "resources": [],
+    "shortDescription": ""
   },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "window": {
-        "all": false,
-        "close": true,
-        "hide": true,
-        "show": true,
-        "setPosition": true
-      }
-    },
-    "bundle": {
-      "active": true,
-      "category": "Utility",
-      "copyright": "",
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "com.pasteplus.app",
-      "longDescription": "",
-      "resources": [],
-      "shortDescription": "",
-      "targets": "all"
-    },
+  "productName": "PastePlus",
+  "mainBinaryName": "PastePlus",
+  "version": "0.1.0",
+  "identifier": "com.pasteplus.app",
+  "plugins": {},
+  "app": {
     "security": {
-      "csp": null
-    },
-    "systemTray": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": true,
-      "menuOnLeftClick": false
+      "csp": null,
+      "capabilities": [
+        "migrated"
+      ]
     },
     "windows": [
       {
@@ -58,8 +46,17 @@
         "alwaysOnTop": true,
         "skipTaskbar": true,
         "visible": false,
-        "label": "main"
+        "label": "main",
+        "useHttpsScheme": true
       }
-    ]
+    ],
+    "trayIcon": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true,
+      "menuOnLeftClick": false
+    },
+    "security": {
+      "csp": null
+    }
   }
 }

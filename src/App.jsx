@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
+import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 
 function App() {
@@ -20,20 +20,36 @@ function App() {
     return () => { unlisten.then(f => f()); };
   }, []);
 
-  const handleSelect = async (content) => {
-    await invoke("select_item", { content });
+  const [copiedId, setCopiedId] = useState(null);
+
+  const handleSelect = async (item) => {
+    try {
+      await invoke("select_item", { content: item.content });
+      setCopiedId(item.id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (e) {
+      console.error("Failed to select item:", e);
+    }
   };
 
   const handleDelete = async (e, id) => {
-    e.stopPropagation();
-    await invoke("delete_item", { id });
-    refreshHistory();
+    try {
+      e.stopPropagation();
+      await invoke("delete_item", { id });
+      refreshHistory();
+    } catch (e) {
+      console.error("Failed to delete item:", e);
+    }
   };
 
   const handleTogglePin = async (e, id) => {
-    e.stopPropagation();
-    await invoke("toggle_pin", { id });
-    refreshHistory();
+    try {
+      e.stopPropagation();
+      await invoke("toggle_pin", { id });
+      refreshHistory();
+    } catch (e) {
+      console.error("Failed to toggle pin:", e);
+    }
   };
 
   return (
@@ -46,10 +62,11 @@ function App() {
           items.map((item) => (
             <div 
               key={item.id} 
-              className="item" 
-              onClick={() => handleSelect(item.content)}
+              className={`item ${copiedId === item.id ? 'copied' : ''}`}
+              onClick={() => handleSelect(item)}
             >
               <div className="content">{item.content}</div>
+              {copiedId === item.id && <div className="copied-badge">Copied!</div>}
               <div className="actions">
                 <button 
                   className={`action-btn pin-btn ${item.pinned ? 'active' : ''}`}
@@ -112,6 +129,18 @@ function App() {
         }
         .item:hover {
           background: #313244;
+        }
+        .item.copied {
+          background: #313244;
+          border-left: 3px solid #a6e3a1;
+        }
+        .copied-badge {
+          font-size: 0.7rem;
+          background: #a6e3a1;
+          color: #11111b;
+          padding: 2px 6px;
+          border-radius: 4px;
+          margin-right: 8px;
         }
         .content {
           white-space: nowrap;
