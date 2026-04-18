@@ -25,22 +25,23 @@ pub fn init_db() -> Result<Connection> {
 }
 
 pub fn insert_item(conn: &Connection, content: &str) -> Result<()> {
-    let last_content: Option<String> = conn.query_row(
-        "SELECT content FROM history ORDER BY timestamp DESC LIMIT 1",
-        [],
+    let existing_id: Option<i32> = conn.query_row(
+        "SELECT id FROM history WHERE content = ?",
+        params![content],
         |row| row.get(0),
     ).optional()?;
 
-    if let Some(last) = last_content {
-        if last == content {
-            return Ok(());
-        }
+    if let Some(id) = existing_id {
+        conn.execute(
+            "UPDATE history SET timestamp = CURRENT_TIMESTAMP WHERE id = ?",
+            params![id],
+        )?;
+    } else {
+        conn.execute(
+            "INSERT INTO history (content) VALUES (?)",
+            params![content],
+        )?;
     }
-
-    conn.execute(
-        "INSERT INTO history (content) VALUES (?)",
-        params![content],
-    )?;
 
     conn.execute(
         "DELETE FROM history WHERE id NOT IN (

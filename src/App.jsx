@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 
 function App() {
   const [items, setItems] = useState([]);
+  const copiedTimeoutRef = useRef(null);
 
   const refreshHistory = async () => {
     try {
@@ -26,7 +27,14 @@ function App() {
     try {
       await invoke("select_item", { content: item.content });
       setCopiedId(item.id);
-      setTimeout(() => setCopiedId(null), 2000);
+      
+      if (copiedTimeoutRef.current) {
+        clearTimeout(copiedTimeoutRef.current);
+      }
+      copiedTimeoutRef.current = setTimeout(() => {
+        setCopiedId(null);
+        copiedTimeoutRef.current = null;
+      }, 2000);
     } catch (e) {
       console.error("Failed to select item:", e);
     }

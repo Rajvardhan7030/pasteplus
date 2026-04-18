@@ -24,9 +24,13 @@ pub fn start_watcher(on_change: impl Fn(String) + Send + Sync + 'static) {
     std::thread::spawn(move || {
         let callback = Box::new(on_change);
         if session_type == "wayland" {
-            let _ = wayland::WaylandWatcher.watch(callback);
+            if let Err(e) = wayland::WaylandWatcher.watch(callback) {
+                eprintln!("Wayland clipboard watcher failed: {}", e);
+            }
         } else {
-            let _ = x11::X11Watcher.watch(callback);
+            if let Err(e) = x11::X11Watcher.watch(callback) {
+                eprintln!("X11 clipboard watcher failed: {}", e);
+            }
         }
     });
 }
