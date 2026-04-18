@@ -1,4 +1,8 @@
-ClipFlow
+<h1 align="center">$\color{red}{WARNNING!!}$</h1><br>
+<p>read this before cloning it. this is in a devlopment stage and it need sudo permission on your computer to run,so if your a vibe-code or cuck-coder and dont know what your doing dont use it </p>
+
+<h1 align="center">|| pasteplus ||</h1>
+  
 <p align="center"> <b>A fast, native-feeling clipboard manager for Linux</b><br/> Minimal. Smart. Always within reach. </p> <p align="center"> <img src="https://img.shields.io/badge/platform-linux-blue?style=flat-square" /> <img src="https://img.shields.io/badge/built%20with-tauri-orange?style=flat-square" /> <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" /> <img src="https://img.shields.io/badge/status-MVP-yellow?style=flat-square" /> </p>
 ✨ Overview
 
