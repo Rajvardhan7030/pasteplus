@@ -24,9 +24,21 @@ function App() {
     await invoke("select_item", { content });
   };
 
+  const handleDelete = async (e, id) => {
+    e.stopPropagation();
+    await invoke("delete_item", { id });
+    refreshHistory();
+  };
+
+  const handleTogglePin = async (e, id) => {
+    e.stopPropagation();
+    await invoke("toggle_pin", { id });
+    refreshHistory();
+  };
+
   return (
     <div className="container">
-      <div className="header">ClipFlow History</div>
+      <div className="header">PastePlus History</div>
       <div className="list">
         {items.length === 0 ? (
           <div className="empty">No history yet. Go copy something!</div>
@@ -38,7 +50,22 @@ function App() {
               onClick={() => handleSelect(item.content)}
             >
               <div className="content">{item.content}</div>
-              {item.pinned && <span className="pin">📌</span>}
+              <div className="actions">
+                <button 
+                  className={`action-btn pin-btn ${item.pinned ? 'active' : ''}`}
+                  onClick={(e) => handleTogglePin(e, item.id)}
+                  title={item.pinned ? "Unpin" : "Pin"}
+                >
+                  📌
+                </button>
+                <button 
+                  className="action-btn delete-btn"
+                  onClick={(e) => handleDelete(e, item.id)}
+                  title="Delete"
+                >
+                  🗑️
+                </button>
+              </div>
             </div>
           ))
         )}
@@ -74,7 +101,7 @@ function App() {
           font-size: 0.9rem;
         }
         .item {
-          padding: 12px 16px;
+          padding: 8px 16px;
           border-bottom: 1px solid #313244;
           cursor: pointer;
           display: flex;
@@ -90,9 +117,37 @@ function App() {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width: 90%;
+          max-width: 70%;
         }
-        .pin { font-size: 0.8rem; }
+        .actions {
+          display: flex;
+          gap: 8px;
+          opacity: 0;
+          transition: opacity 0.1s ease;
+        }
+        .item:hover .actions {
+          opacity: 1;
+        }
+        .action-btn {
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          font-size: 1rem;
+          padding: 4px;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          filter: grayscale(100%);
+          transition: all 0.1s ease;
+        }
+        .action-btn:hover {
+          background: #45475a;
+          filter: grayscale(0%);
+        }
+        .pin-btn.active {
+          filter: grayscale(0%);
+        }
       `}</style>
     </div>
   );

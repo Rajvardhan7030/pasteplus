@@ -28,4 +28,21 @@ impl ClipboardWatcher for X11Watcher {
             thread::sleep(Duration::from_millis(500));
         }
     }
+
+    fn set_content(&self, content: String) -> Result<()> {
+        use std::io::Write;
+        use std::process::Stdio;
+        let mut child = Command::new("xclip")
+            .arg("-selection")
+            .arg("clipboard")
+            .stdin(Stdio::piped())
+            .spawn()
+            .map_err(|_| anyhow::anyhow!("xclip not installed?"))?;
+
+        let mut stdin = child.stdin.take().ok_or_else(|| anyhow::anyhow!("Failed to open stdin"))?;
+        stdin.write_all(content.as_bytes())?;
+        drop(stdin);
+        child.wait()?;
+        Ok(())
+    }
 }

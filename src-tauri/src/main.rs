@@ -33,6 +33,8 @@ async fn select_item(handle: tauri::AppHandle, content: String) -> Result<(), St
     let window = handle.get_window("main").unwrap();
     window.hide().unwrap();
 
+    clipboard::set_content(content).map_err(|e| e.to_string())?;
+
     std::thread::spawn(move || {
         std::thread::sleep(std::time::Duration::from_millis(50));
         
@@ -43,6 +45,18 @@ async fn select_item(handle: tauri::AppHandle, content: String) -> Result<(), St
     });
 
     Ok(())
+}
+
+#[tauri::command]
+async fn delete_item(state: tauri::State<'_, AppState>, id: i32) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    db::delete_item(&db, id).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+async fn toggle_pin(state: tauri::State<'_, AppState>, id: i32) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    db::toggle_pin(&db, id).map_err(|e| e.to_string())
 }
 
 fn main() {
@@ -86,7 +100,7 @@ fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![get_history, select_item])
+        .invoke_handler(tauri::generate_handler![get_history, select_item, delete_item, toggle_pin])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -3,7 +3,7 @@ use directories::ProjectDirs;
 use anyhow::{Result, Context};
 
 pub fn init_db() -> Result<Connection> {
-    let proj_dirs = ProjectDirs::from("com", "clipflow", "clipflow")
+    let proj_dirs = ProjectDirs::from("com", "pasteplus", "pasteplus")
         .context("Could not determine config directory")?;
     
     let db_path = proj_dirs.data_dir();
@@ -44,14 +44,28 @@ pub fn insert_item(conn: &Connection, content: &str) -> Result<()> {
 
     conn.execute(
         "DELETE FROM history WHERE id NOT IN (
-            SELECT id FROM history 
-            WHERE pinned = 1 
+            SELECT id FROM history WHERE pinned = 1 
             UNION 
-            SELECT id FROM history 
-            ORDER BY timestamp DESC LIMIT 50
+            SELECT id FROM (
+                SELECT id FROM history 
+                ORDER BY timestamp DESC LIMIT 50
+            )
         )",
         [],
     )?;
 
+    Ok(())
+}
+
+pub fn delete_item(conn: &Connection, id: i32) -> Result<()> {
+    conn.execute("DELETE FROM history WHERE id = ?", params![id])?;
+    Ok(())
+}
+
+pub fn toggle_pin(conn: &Connection, id: i32) -> Result<()> {
+    conn.execute(
+        "UPDATE history SET pinned = 1 - pinned WHERE id = ?",
+        params![id],
+    )?;
     Ok(())
 }

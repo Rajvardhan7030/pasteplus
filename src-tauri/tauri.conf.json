@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "ClipFlow",
+    "productName": "PastePlus",
     "version": "0.1.0"
   },
   "tauri": {
@@ -32,7 +32,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.clipflow.app",
+      "identifier": "com.pasteplus.app",
       "longDescription": "",
       "resources": [],
       "shortDescription": "",
@@ -51,7 +51,7 @@
         "fullscreen": false,
         "height": 400,
         "resizable": false,
-        "title": "ClipFlow",
+        "title": "PastePlus",
         "width": 350,
         "transparent": true,
         "decorations": false,
