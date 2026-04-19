@@ -7,8 +7,10 @@ function App() {
   const copiedTimeoutRef = useRef(null);
 
   const refreshHistory = async () => {
+    console.log("Refreshing history...");
     try {
       const data = await invoke("get_history");
+      console.log("Received data:", data);
       setItems(data);
     } catch (e) {
       console.error("Failed to fetch history:", e);
@@ -17,7 +19,11 @@ function App() {
 
   useEffect(() => {
     refreshHistory();
-    const unlisten = listen("db-updated", () => refreshHistory());
+    console.log("Setting up db-updated listener...");
+    const unlisten = listen("db-updated", (event) => {
+      console.log("Received db-updated event!", event);
+      refreshHistory();
+    });
     return () => { unlisten.then(f => f()); };
   }, []);
 

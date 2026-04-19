@@ -37,14 +37,14 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 400,
+        "height": 450,
         "resizable": false,
         "title": "PastePlus",
-        "width": 350,
-        "transparent": true,
-        "decorations": false,
-        "alwaysOnTop": true,
-        "skipTaskbar": true,
+        "width": 380,
+        "transparent": false,
+        "decorations": true,
+        "alwaysOnTop": false,
+        "skipTaskbar": false,
         "visible": false,
         "label": "main",
         "useHttpsScheme": true
@@ -54,9 +54,6 @@
       "iconPath": "icons/icon.png",
       "iconAsTemplate": true,
       "menuOnLeftClick": false
-    },
-    "security": {
-      "csp": null
     }
   }
 }
