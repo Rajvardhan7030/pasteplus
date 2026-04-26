@@ -1,122 +1,71 @@
-<h1 align="center">$\color{red}{WARNNING!!}$</h1><br>
-<p>read this before cloning it. this is in a devlopment stage and it need sudo permission on your computer to run,so if your a vibe-code or cuck-coder and dont know what your doing dont use it </p>
-
-<h1 align="center">|| pasteplus ||</h1>
+<h1 align="center">|| PastePlus ||</h1>
   
-<p align="center"> <b>A fast, native-feeling clipboard manager for Linux</b><br/> Minimal. Smart. Always within reach. </p> <p align="center"> <img src="https://img.shields.io/badge/platform-linux-blue?style=flat-square" /> <img src="https://img.shields.io/badge/built%20with-tauri-orange?style=flat-square" /> <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" /> <img src="https://img.shields.io/badge/status-MVP-yellow?style=flat-square" /> </p>
+<p align="center"> <b>A fast, native-feeling clipboard manager for Linux</b><br/> Minimal. Smart. Always within reach. </p> 
+<p align="center"> 
+<img src="https://img.shields.io/badge/platform-linux-blue?style=flat-square" /> 
+<img src="https://img.shields.io/badge/built%20with-tauri-orange?style=flat-square" /> 
+<img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" /> 
+<img src="https://img.shields.io/badge/status-MVP-yellow?style=flat-square" /> 
+</p>
+
 ✨ Overview
 
-ClipFlow is a lightweight clipboard manager designed for Linux users who want speed, simplicity, and a native experience.
+**PastePlus** is a lightweight clipboard manager designed for Linux users who want speed, simplicity, and a native experience. It runs quietly in the background, tracks your clipboard history precisely, and lets you instantly recall anything with a global shortcut.
 
-It runs quietly in the background, tracks your clipboard history, and lets you instantly recall anything with a global shortcut.
 🚀 Features
-🧠 Background Daemon
-Seamlessly monitors clipboard changes using wl-paste (Wayland) or xclip (X11)
-🧹 Smart Deduplication
-Eliminates consecutive duplicate entries to keep history clean
-⚡ Global Shortcut
-Press Ctrl + Shift + V to access your clipboard anytime
-📋 Instant Paste
-Click an item → instantly paste into the focused application
-💾 Persistent Storage
-Stores history locally via SQLite
-~/.local/share/clipflow/history.db
+- 🧠 **Background Daemon**: Seamlessly monitors clipboard changes using Wayland or X11.
+- 🧹 **Smart Deduplication**: Eliminates consecutive duplicate entries while preserving exact formatting, leading spaces, and newlines.
+- ⚡ **Global Shortcut**: Press `Ctrl + Shift + V` to access your clipboard anytime.
+- 📌 **Pinning**: Keep important snippets at the top of your history.
+- 📋 **Instant Paste**: Click an item to instantly paste it into the focused application.
+- 💾 **Persistent Storage**: Stores up to 100 history items locally via SQLite (~/.local/share/pasteplus/history.db).
 
 🛠️ Tech Stack
-Frontend: HTML, CSS, JavaScript
-Backend: Rust (via Tauri)
-Clipboard Tools: wl-clipboard, xclip
-Storage: SQLite
+- Frontend: HTML, CSS, JavaScript (React)
+- Backend: Rust (via Tauri 2.0)
+- Clipboard Tools: wl-clipboard (Wayland), xclip/xdotool (X11)
+- Storage: SQLite
 
 ⚙️ System Requirements
 
-Install the required dependencies:
+Install the required dependencies for your environment:
 
-Wayland
-wl-clipboard
-X11
-xclip
-Auto-Paste Support
-Debian/Ubuntu → libxdo-dev
-Arch → libxdo
+### Wayland
+- `wl-clipboard`
+- `wtype` (for auto-paste)
+
+### X11
+- `xclip`
+- `xdotool` (for auto-paste)
+
 📦 Getting Started
-1. Install Node Dependencies
-npm install
-2. Install Linux Dependencies (Ubuntu/Debian)
-sudo apt update
-sudo apt install \
-  libwebkit2gtk-4.1-dev \
-  build-essential \
-  curl \
-  wget \
-  file \
-  libssl-dev \
-  libgtk-3-dev \
-  libayatana-appindicator3-dev \
-  librsvg2-dev \
-  libxdo-dev \
-  wl-clipboard \
-  xclip
-3. Run in Development
-npm run tauri dev
-4. Build for Production
-npm run tauri build
+1. **Install Linux Dependencies (Ubuntu/Debian)**
+   ```bash
+   sudo apt update
+   sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev libxdo-dev wl-clipboard xclip xdotool wtype
+   ```
+2. **Install Node Dependencies**
+   ```bash
+   npm install
+   ```
+3. **Run in Development**
+   ```bash
+   npm run tauri dev
+   ```
+4. **Build for Production**
+   ```bash
+   npm run tauri build
+   ```
+
 🎮 Usage
-Ctrl + Shift + V → Open clipboard history
-Click an item → Paste into active window
-System Tray → Open history or quit
-🗺️ Roadmap
-Phase 1 (MVP) ✅
-Clipboard history tracking
-Global shortcut popup
-SQLite persistence
-Deduplication
-Phase 2
-Pin items 📌
-Search & filtering 🔍
-Configurable history limit
-Better UI/UX animations
-Phase 3
-Cross-platform support (Windows)
-Cloud sync (optional)
-Plugin system
-Encrypted clipboard entries
-🤝 Contributing
+- **Ctrl + Shift + V** → Open clipboard history popup.
+- **Click an item** → Copies to clipboard and pastes into the active window.
+- **Pin icon (📌)** → Keep an item at the top and prevent it from being deleted.
+- **Trash icon (🗑️)** → Remove an item from history.
+- **System Tray** → Right-click the icon to Open history or Quit.
 
-Contributions are welcome—whether it's fixing bugs, improving UI, or suggesting features.
-
-How to Contribute
-Fork the repository
-
-Create a new branch
-
-git checkout -b feature/your-feature-name
-Make your changes
-
-Commit your work
-
-git commit -m "Add: your feature description"
-
-Push to your branch
-
-git push origin feature/your-feature-name
-Open a Pull Request
-Contribution Guidelines
-Keep code clean and readable
-Follow existing project structure
-Write meaningful commit messages
-Test before submitting PRs
-🐛 Issues & Feedback
-
-Found a bug or have an idea?
-
-Open an issue
-Describe the problem clearly
-Include steps to reproduce
 📄 License
-
 This project is licensed under the MIT License.
 
 💡 Vision
-
-ClipFlow aims to become the go-to clipboard manager for developers and power users, balancing performance with simplicity—no bloat, just flow.
+PastePlus aims to become the go-to clipboard manager for developers and power users, balancing performance with simplicity—no bloat, just flow.

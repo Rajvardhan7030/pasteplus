@@ -59,8 +59,9 @@ impl ClipboardWatcher for WaylandWatcher {
                     
                     if let Ok(out) = output {
                         let content = String::from_utf8_lossy(&out.stdout).to_string();
-                        if !content.trim().is_empty() {
-                            on_change(content);
+                        if !content.is_empty() && content != last_content {
+                            on_change(content.clone());
+                            last_content = content;
                         }
                     }
                 }

@@ -49,7 +49,7 @@ pub fn insert_item(conn: &Connection, content: &str) -> Result<()> {
             UNION 
             SELECT id FROM (
                 SELECT id FROM history 
-                ORDER BY timestamp DESC LIMIT 50
+                ORDER BY timestamp DESC LIMIT 100
             )
         )",
         [],
