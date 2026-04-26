@@ -26,7 +26,8 @@
 - Clipboard Tools: wl-clipboard (Wayland), xclip/xdotool (X11)
 - Storage: SQLite
 
-⚙️ System Requirements
+### 🛠️ Tech Stack ###
+-Frontend: HTML, CSS, JavaScript
 
 Install the required dependencies for your environment:
 
